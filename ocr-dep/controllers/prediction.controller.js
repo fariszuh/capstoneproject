@@ -7,7 +7,7 @@ exports.makePredictions = async (req, res, next) => {
     try {
         const loadModel = async (img) => {
             const output = {};
-            const model = await tf.loadLayersModel('http://127.0.1.1:80/Code/ocr-depl/capstoneproject/ocr-dep/models/models.json');
+            const model = await tf.loadLayersModel('https://storage.googleapis.com/atomic-wall-352504.appspot.com/models.json');
             const temp = model.predict(img);
             output.predictions = temp.arraySync();
             
