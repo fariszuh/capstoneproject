@@ -1,25 +1,25 @@
 const express = require('express');
-const tf = require('@tensorflow/tfjs-node')
+const app = express();
 
-const ports = process.env.PORT | 8080;
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-async function run(){
-    const model = await tf.loadLayersModel('https://jsonkeeper.com/b/375B');
-    const app = express();
+const ports = 8080;
 
-    app.use(express.json);
+app.use(cors({origin: '*'}));
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-    app.post('/prediction', (req, res) => {
-        model.classify([req.body.sentence]).then((predictions) =>{
-            res.json({
-                predictions,
-            });
-        });
-    });
+app.get('/', (req, res) => {
+    res.status(200).send("Hello!").end();
+});
 
-    app.listen(ports, () => {
-        console.log(`Server Listening on Port ${ports}`)
-    });
-}
+const predictRouter = require('./routes/prediction.route');
 
-run();
+app.use('/prediction', predictRouter);
+
+app.listen(ports, () => {
+    console.log(`Server Listening on Port ${ports}`);
+});
+
+module.exports = app;
