@@ -4,6 +4,7 @@
   "description": "OCR Text Recognition for Deployment on Google Cloud Platform",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
